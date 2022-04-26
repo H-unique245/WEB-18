@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend</title>
+    <link rel="stylesheet" href="common.css">
+</head>
+<style>
+    .data{
+        margin-top: 100px;
+        display: grid;
+        grid-template-columns: repeat(4,1fr);
+        grid-template-rows: auto;
+        gap: 15px;
+    }
+    .data > div {
+       box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+       border-radius: 10px;
+    }
+    .data > div > :nth-child(1){
+        border-radius: 10px;
+    }
+    .data > div > :nth-child(4){
+        text-align: center;
+        height: 50px;
+        width: auto;
+        margin: auto;
+        
+    }
+</style>
+<body>
+    <div id="container"> 
+        <div><a href="backend.html">Backend</a></div>
+         <div><a href="frontend.html">Frontend</a></div>
+     </div> 
+     <div class="data">
+
+     </div>
+    
+</body>
+</html>
+<script>
+    var data= JSON.parse(localStorage.getItem("investorsData"))||[];
+    console.log(data)
+    data.forEach(function (elem) {
+        var show= document.createElement("div");
+        var showImg= document.createElement("img");
+        showImg.setAttribute("src",elem.investImage);
+        var showName = document.createElement("h3");
+        showName.innerText=elem.investName;
+        var showRole= document.createElement("p");
+        showRole.innerText=  elem.investRole;
+        var showLogo=document.createElement("img");
+        showLogo.setAttribute("src",elem.investLogo);
+        show.append(showImg, showName, showRole,showLogo);
+        document.querySelector(".data").append(show);
+    })
+</script>
