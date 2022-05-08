@@ -14,6 +14,24 @@
       <div><a href="applied.html">Applied Jobs</a></div>
       <div><a href="bookmark.html">Bookmarks</a></div>
     </div>
+    <select id="sortNames" onchange="handleNameSort()">
+      <option value="">Sort By Names</option>
+      <option value="ascending">Ascending</option>
+      <option value="descending">Descending</option>
+    </select>
+
+    <select id="sortSalary" onchange="handleSalarySort()">
+      <option value="">Sort By Salary</option>
+      <option value="htl">High to Low</option>
+      <option value="lth">Low to High</option>
+    </select>
+
+    <select id="filterRole" onchange="handleRoleFilter()">
+      <option value="">Filter by Role</option>
+      <option value="FSD">FSD</option>
+      <option value="Frontend">Frontend</option>
+      <option value="Backend">Backend</option>
+    </select>
 
     <main>
       <table>
@@ -32,16 +50,91 @@
       </table>
     </main>
   </body>
-  <script>
-    //you need to code here
-    var jobArr= JSON.parse(localStorage.getItem("jobList")) || [];
+ 
+</html>
+<script>
+  //you need to code here
+  var jobArr= JSON.parse(localStorage.getItem("jobList")) || [];
+  displayData (jobArr)
 
-    displayData (jobArr)
-    var bookmarkArr= JSON.parse(localStorage.getItem("bookmarks")) || []
+  function handleSalarySort() {
+    var selected = document.querySelector("#sortSalary").value;
+    //console.log(selected);
+    if (selected == "htl") {
+      jobArr.sort(function (a, b) {
+        return b.personSal - a.personSal;
+      });
+      // console.log(jobArr);
+      displayData(jobArr);
+    }
+    if (selected == "lth") {
+      jobArr.sort(function (a, b) {
+        return a.personSal - b.personSal;
+      });
+      // console.log(jobArr);
+      displayData(jobArr);
+    }
+  }
+  function handleRoleFilter() {
+    var selected = document.querySelector("#filterRole").value;
+    // filter will return array whenever it satifies the given condn
 
-    function displayData (data){
-     data.forEach(function (elem){
-      var tr = document.createElement("tr");
+    var filteredList = jobArr.filter(function (elem) {
+      return elem.personRole == selected;
+    });
+
+    console.log(filteredList);
+    displayData(filteredList);
+  }
+
+  function handleNameSort() {
+    var selected = document.querySelector("#sortNames").value;
+    console.log(selected);
+
+    if (selected == "ascending") {
+      jobArr.sort(function (a, b) {
+        var x = a.personName.toUpperCase();
+        var y = b.personName.toUpperCase();
+        if (x > y) {
+          return 1;
+        }
+        if (x < y) {
+          return -1;
+        }
+        return 0;
+      });
+      console.log(jobArr);
+      displayData(jobArr);
+    }
+    if (selected == "descending") {
+      jobArr.sort(function (a, b) {
+        var x = a.personName.toUpperCase();
+        var y = b.personName.toUpperCase();
+        if (x > y) {
+          return -1;
+        }
+        if (x < y) {
+          return 1;
+        }
+        return 0;
+      });
+      console.log(jobArr);
+      displayData(jobArr);
+    }
+  }
+
+
+
+
+
+
+  // displayData (jobArr)
+  var bookmarkArr= JSON.parse(localStorage.getItem("bookmarks")) || []
+
+  function displayData (data){
+    document.querySelector("tbody").innerHTML = "";
+   data.forEach(function (elem){
+    var tr = document.createElement("tr");
 
 var td1 = document.createElement("td");
 td1.innerText = elem.personName;
@@ -60,8 +153,8 @@ td5.innerText = "Bookmark";
 td5.style.color = "blue";
 td5.style.cursor = "pointer";
 td5.addEventListener("click", function () {
-  //writing logic here
-  bookMarkFun(elem);
+//writing logic here
+bookMarkFun(elem);
 });
 
 tr.append(td1, td2, td3, td4, td5);
@@ -72,12 +165,11 @@ document.querySelector("tbody").append(tr);
 
 
 function bookMarkFun(elem){
-   bookmarkArr.push(elem);
-  //  console.log(bookmarkArr)
-   localStorage.setItem("bookmarks", JSON.stringify(bookmarkArr))
+ bookmarkArr.push(elem);
+//  console.log(bookmarkArr)
+ localStorage.setItem("bookmarks", JSON.stringify(bookmarkArr))
 
-   window.location.href ="bookmark.html"
+ window.location.href ="bookmark.html"
 }
 
-  </script>
-</html>
+</script>
