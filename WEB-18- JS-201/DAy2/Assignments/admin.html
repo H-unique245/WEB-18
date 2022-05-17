@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seller Data</title>
+    <style>
+        form{
+            width:60% ;
+            margin:10% auto;
+            padding: 40px 10px;
+            display: flex;
+            background-color: aquamarine;
+            flex-direction:column ;
+        }
+        input, select,label{
+            width: 30%;
+            margin: 10px auto;
+        }
+        #add{
+            background-color: rgb(245, 199, 83);
+            color: white;
+            font-size: 20px;
+            font-weight: 900;
+            border: none;
+        }
+        h1{
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Admin Page</h1>
+    <form onsubmit="submitProduct(event)" id="seller">
+     <input type="text" id="name" placeholder="Product Name" required>
+     <input type="text" id="category" placeholder="Category"required>
+     <input type="text" id="image" placeholder="Image_Url"required>
+     <input type="text" id="price" placeholder="Price"required>
+     <select name="Gender" id="gender"required>
+         <option value="">Select Gender</option>
+         <option value="male">Male</option>
+         <option value="female">Female</option>
+     </select>
+     <label><input type='checkbox' id="sold" unchecked > Sold</label>
+     <input type="submit" id="add">
+    </form>
+</body>
+</html>
+<script>
+    
+function Product(name,category,image,price,gender) {
+    this.name= name;
+    this.category= category;
+    this.image = image;
+    this.price = price;
+    this.gender = gender;
+}
+    let arr=JSON.parse(localStorage.getItem("products")) || [];
+
+    function submitProduct(e) {
+        e.preventDefault();
+
+    let form = document.getElementById("seller");
+    let name = form.name.value;
+    let category = form.category.value;
+    let image = form.image.value;
+    let price = form.price.value;
+    let gender = form.gender.value;
+
+
+    let p = new Product (name, category, image, price,gender);
+    arr.push(p);
+    console.log(arr);
+    localStorage.setItem("products", JSON.stringify(arr))
+}
+</script>
