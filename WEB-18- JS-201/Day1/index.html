@@ -9,28 +9,149 @@
         #winner{
         width: 40%;
         margin: auto;
-        border: 1px solid green;
+        text-align: center;
+        font-weight: 900;
+        /* background-color:initial; */
+        font-size: 25px;
+        /* border: 1px solid green; */
     }
     .size{
-        width: 20%;
+        width: 100px;
+        height: 50px;
         margin: 5% auto;
         text-align: center;
         border: 1px solid black;
+        background-color:darkorange;
         font-size: large;
 
     }
+    #member-1{
+        transition: cubic-bezier(0.39, 0.575, 0.565, 1);
+    }
+    button{
+        text-align: center;
+        width: 100px;
+        background-color:deeppink ;
+        color: white;
+        border: none;
+        font-size: 19px;
+        font-weight: 900;
+    }
+    .rotating {
+   animation: rotate 1s ;
+}
+
+@keyframes rotate {
+   0% { transform: rotate(0deg); }
+   100% { transform: rotate(270deg); }
+}
+
    </style>
 </head>
 <body>
-    <div id="winner"></div>
+    <div id="winner">Winner is : <span></span></div>
     <div id="member-1" class="size">1,2,3,4,5,6</div> 
     <div id="member-2" class="size">1,2,3,4,5,6</div>
     <div id="member-3" class="size">1,2,3,4,5,6</div>
+    <center><button>Roll the Dice</button> </center>
 </body>
 </html>
 <script>
     // document.getElementById("member-1").
     var arr=[1,2,3,4,5,6];
-    var ans=Math.random()arr;
+    var ans=Math.floor(Math.random()*6+1)
     console.log(Math.floor(ans))
+    document.querySelector("button").addEventListener("click",rollDice);
+    function rollDice(){
+        document.querySelector("#member-1").classList.add('rotating')
+        document.querySelector("#member-2").classList.add('rotating')
+        document.querySelector("#member-3").classList.add('rotating')
+        
+        let mem1= Math.floor(Math.random()*6+1);
+        document.getElementById("member-1").innerText= mem1;
+
+        let mem2= Math.floor(Math.random()*6+1);
+        document.getElementById("member-2").innerText= mem2;
+
+        let mem3= Math.floor(Math.random()*6+1);
+        document.getElementById("member-3").innerText= mem3;
+        
+        // let mem3= document.getElementById("member-3");
+        // mem3.innerHTML= Math.floor(Math.random()*6+1);
+
+        // let mem2= document.getElementById("member-2");
+        // mem2.innerHTML= Math.floor(Math.random()*6+1);
+       
+        if(mem1 > mem2 && mem1 > mem3){
+            document.querySelector("span").innerText= "A";
+            document.getElementById("member-1").style.backgroundColor= "green";
+            if(mem2 > mem3){
+                document.getElementById("member-2").style.backgroundColor= "yellow";
+                document.getElementById("member-3").style.backgroundColor= "red";
+            }
+            else if(mem2 === mem3){
+                document.getElementById("member-3").style.backgroundColor= "blue";
+                document.getElementById("member-2").style.backgroundColor= "blue";
+            }
+            else{
+                document.getElementById("member-3").style.backgroundColor= "yellow";
+                document.getElementById("member-2").style.backgroundColor= "red";
+            }
+            
+        }
+        
+        else if(mem3 > mem2 && mem3 > mem1){
+            document.querySelector("span").innerText= "C";
+            document.getElementById("member-3").style.backgroundColor= "green"
+            if(mem2 > mem1){
+                document.getElementById("member-2").style.backgroundColor= "yellow";
+                document.getElementById("member-1").style.backgroundColor= "red";
+            }
+            else if(mem2 === mem1){
+                document.getElementById("member-1").style.backgroundColor= "blue";
+                document.getElementById("member-2").style.backgroundColor= "blue";
+            }
+            else{
+                document.getElementById("member-1").style.backgroundColor= "yellow";
+                document.getElementById("member-2").style.backgroundColor= "red";
+            }
+        }
+        
+        else if(mem2 > mem1 && mem2 > mem3){
+            document.querySelector("span").innerText= "B";
+            document.getElementById("member-2").style.backgroundColor= "green"
+            if(mem3 > mem1){
+                document.getElementById("member-3").style.backgroundColor= "yellow";
+                document.getElementById("member-1").style.backgroundColor= "red";
+            }
+            else if(mem3 === mem1){
+                document.getElementById("member-3").style.backgroundColor= "blue";
+                document.getElementById("member-1").style.backgroundColor= "blue";
+            }
+            else{
+                document.getElementById("member-3").style.backgroundColor= "yellow";
+                document.getElementById("member-1").style.backgroundColor= "red";
+            }
+        }
+         
+        else if(mem1 == mem2 && mem1 > mem3){
+            document.querySelector("span").innerText= "Tie";
+            document.getElementById("member-1").style.backgroundColor= "blue"
+            document.getElementById("member-2").style.backgroundColor= "blue"
+            document.getElementById("member-3").style.backgroundColor= "red"
+        }
+        
+        else if(mem1 == mem3 && mem1 > mem2){
+            document.querySelector("span").innerText= "Tie";
+            document.getElementById("member-1").style.backgroundColor= "blue"
+            document.getElementById("member-2").style.backgroundColor= "red"
+            document.getElementById("member-3").style.backgroundColor= "blue"
+        }
+        else if(mem2 == mem3 && mem2 > mem1){
+            document.querySelector("span").innerText= "Tie";
+            document.getElementById("member-1").style.backgroundColor= "red"
+            document.getElementById("member-2").style.backgroundColor= "blue"
+            document.getElementById("member-3").style.backgroundColor= "blue"
+        }
+    }
 </script>
